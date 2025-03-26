@@ -24,3 +24,25 @@ def validate_reg_b(loan):
         "compliant": compliant,
         "errors": errors
     }
+
+def validate_large_small_business_reg_b(loan):
+    """
+    Validate Reg-B for small businesses (> $1M revenue)
+    - Provide reasons for adverse action if requested within 60 days
+    """
+    errors = []
+
+    decision_date = datetime.strptime(loan.decision_date, "%Y-%m-%d")
+    request_date = datetime.strptime(loan.request_date, "%Y-%m-%d") if loan.request_date else None
+
+    if request_date:
+        # Ensure adverse action reason is provided within 60 days
+        if (request_date - decision_date).days > 60:
+            errors.append("Failure to provide reasons for adverse action within 60 days for large small business.")
+
+    compliant = len(errors) == 0
+
+    return {
+        "compliant": compliant,
+        "errors": errors
+    }
