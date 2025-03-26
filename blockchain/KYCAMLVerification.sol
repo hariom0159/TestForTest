@@ -49,7 +49,7 @@ contract KYCAMLVerification {
         require(customers[_customer].isKYCVerified, "Customer must be KYC verified first");
 
         // Basic AML check: flag if risk score exceeds threshold
-        if (_riskScore >= 70) {
+        if (_riskScore >= 65) {
             customers[_customer].isFlagged = true;
             emit AMLFlagged(_customer, "Suspicious activity detected");
         }
