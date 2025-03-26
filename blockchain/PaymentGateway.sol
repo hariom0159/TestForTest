@@ -19,6 +19,7 @@ contract PaymentGateway {
     // Issue a loan
     function issueLoan(address _borrower, uint256 _amount) public {
         require(_amount > 0, "Loan amount must be greater than 0");
+        require(_amount < 100000, "Loan amount must be less than than 100K");
 
         loans[nextLoanId] = Loan(nextLoanId, _borrower, _amount, false);
         
